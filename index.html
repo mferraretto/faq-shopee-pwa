@@ -2,306 +2,470 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Painel FAQ Shopee</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', sans-serif; margin: 0; display: flex; background: #f8f9fa; color: #333; }
-        nav { min-width: 250px; background: #fff; padding: 20px; border-right: 1px solid #dee2e6; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
-        nav a { display: block; color: #495057; text-decoration: none; margin: 8px 0; padding: 8px; border-radius: 4px; }
-        nav a:hover { background-color: #ffc107; color: #000; }
-        main { flex: 1; padding: 30px; }
-        details { background: #fff; margin-top: 12px; padding: 18px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-        .resposta { margin-top: 10px; padding-left: 15px; border-left: 4px solid #17a2b8; }
-        .copyBtn, .whatsBtn { background: #ffc107; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-right: 5px; }
-        #statsBtn { float: right; background: #17a2b8; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
-        #statsModal { display: none; position: fixed; top: 10%; left: 10%; width: 80%; background: #fff; border: 2px solid #ccc; border-radius: 8px; padding: 20px; z-index: 9999; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .closeModal { float: right; cursor: pointer; color: #dc3545; font-size: 18px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ Shopee Profissional</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    :root {
+      --bg: #f8f9fa;
+      --text: #212529;
+      --card: #fff;
+    }
+    body.dark {
+      --bg: #212529;
+      --text: #f8f9fa;
+      --card: #343a40;
+    }
+    header {
+      background: #dc3545;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    main {
+      padding: 1rem 2rem;
+    }
+    button {
+      margin-right: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .copyBtn, .whatsBtn {
+      background: #ffc107;
+      margin-top: 6px;
+    }
+    .resposta {
+      background: var(--card);
+      padding: 10px;
+      border-left: 4px solid #17a2b8;
+      margin-top: 8px;
+      border-radius: 6px;
+    }
+    details {
+      margin-bottom: 15px;
+    }
+    #statsModal {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 9999;
+    }
+    .closeModal {
+      float: right;
+      cursor: pointer;
+      font-size: 20px;
+      color: #dc3545;
+    }
+  </style>
 </head>
 <body>
-<nav>
-    <h2>Categorias</h2>
-<a href="#RECLAMAÇÕES">RECLAMAÇÕES</a>
-<a href="#TROCAS_E_REEMBOLSO">TROCAS E REEMBOLSO</a>
-<a href="#ENTREGAS">ENTREGAS</a>
-<a href="#CANCELADOS">CANCELADOS</a>
-<a href="#DUVIDAS_GERAIS">DUVIDAS GERAIS</a>
-<a href="#CAPAS">CAPAS</a>
-<a href="#MEDIDAS">MEDIDAS</a>
-<a href="#COMPOSIÇÃO_KITS">COMPOSIÇÃO KITS</a>
-<a href="#PIX_E_KANGU">PIX E KANGU</a>
-<a href="#MANUAL">MANUAL</a>
-
-</nav>
-<main>
-    <button id="statsBtn" onclick="abrirEstatisticas()">📊 Ver Estatísticas</button>
-    <h1>Perguntas Frequentes - Shopee</h1>
-<section id="RECLAMAÇÕES">
+  <header>
+    <h1>FAQ Shopee Profissional</h1>
+    <div>
+      <button onclick="toggleDarkMode()">🌙 Modo Escuro</button>
+      <button onclick="abrirEstatisticas()">📊 Ver Estatísticas</button>
+      <button onclick="exportarCSV()">📥 Exportar Cliques</button>
+    </div>
+  </header>
+  <main>
+    <input id="inputIA" oninput="sugerirResposta()" placeholder="Digite a dúvida do cliente..." style="width:100%;padding:10px;margin-bottom:20px;" />
+    <div id="sugestaoIA" style="margin-bottom:20px;color:#17a2b8;font-style:italic;"></div>
 <h2>RECLAMAÇÕES</h2>
 <details>
 <summary>QUAL QUER PEÇA QUEBRADO, CLIENTE NÃO MANDOU FOTO</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, espero que esteja bem. Sinto muito por isso! Para que eu possa te ajudar da melhor forma e o mais rápido possível, você poderia me enviar uma foto do item? Assim, consigo entender melhor o que aconteceu e buscar a melhor solução para você.</div><button class='copyBtn' onclick='registrarClique("QUAL QUER PEÇA QUEBRADO, CLIENTE NÃO MANDOU FOTO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL QUER PEÇA QUEBRADO, CLIENTE NÃO MANDOU FOTO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, espero que esteja bem. Sinto muito por isso! Para que eu possa te ajudar da melhor forma e o mais rápido possível, você poderia me enviar uma foto do item? Assim, consigo entender melhor o que aconteceu e buscar a melhor solução para você.</div>
+<button class='copyBtn' onclick='registrarClique("QUAL QUER PEÇA QUEBRADO, CLIENTE NÃO MANDOU FOTO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL QUER PEÇA QUEBRADO, CLIENTE NÃO MANDOU FOTO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>TRIO DE CILINDRO QUEBRADO, CLIENTE MANDOU FOTO</summary>
-<div class='resposta'><div class='resposta-texto'>Oi! Sinto muito mesmo pelo que aconteceu, isso jamais deveria ter acontecido e entendo totalmente sua frustração. Quero resolver da melhor forma possível pra você: podemos fazer a devolução com reembolso ou troca pela Shopee, ou se preferir, evitar esse processo, posso te enviar outro trio ou qualquer outra peça do nosso catálogo, sem cobrar nada pelas peças, você pagaria só o frete. Assim você não precisa esperar nem se incomodar com devolução dessas ai. O que acha? Estou aqui pra te ajudar</div><button class='copyBtn' onclick='registrarClique("TRIO DE CILINDRO QUEBRADO, CLIENTE MANDOU FOTO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("TRIO DE CILINDRO QUEBRADO, CLIENTE MANDOU FOTO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oi! Sinto muito mesmo pelo que aconteceu, isso jamais deveria ter acontecido e entendo totalmente sua frustração. Quero resolver da melhor forma possível pra você: podemos fazer a devolução com reembolso ou troca pela Shopee, ou se preferir, evitar esse processo, posso te enviar outro trio ou qualquer outra peça do nosso catálogo, sem cobrar nada pelas peças, você pagaria só o frete. Assim você não precisa esperar nem se incomodar com devolução dessas ai. O que acha? Estou aqui pra te ajudar</div>
+<button class='copyBtn' onclick='registrarClique("TRIO DE CILINDRO QUEBRADO, CLIENTE MANDOU FOTO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("TRIO DE CILINDRO QUEBRADO, CLIENTE MANDOU FOTO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>PEÇA QUEBRADA, CLIENTE MANDOU FOTO</summary>
-<div class='resposta'><div class='resposta-texto'>Oi! Sinto muito mesmo pelo que aconteceu, isso jamais deveria ter acontecido e entendo totalmente sua frustração. Quero resolver da melhor forma possível pra você: podemos fazer a devolução com reembolso ou troca pela Shopee, ou se preferir, evitar esse processo, posso te enviar outra peça dessa ou qualquer outra peça do nosso catálogo no mesmo valor que sua compra, sem cobrar nada pelas peças, você pagaria só o frete. Assim você não precisa esperar nem se incomodar com devolução dessas ai. O que acha? Estou aqui pra te ajudar</div><button class='copyBtn' onclick='registrarClique("PEÇA QUEBRADA, CLIENTE MANDOU FOTO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("PEÇA QUEBRADA, CLIENTE MANDOU FOTO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oi! Sinto muito mesmo pelo que aconteceu, isso jamais deveria ter acontecido e entendo totalmente sua frustração. Quero resolver da melhor forma possível pra você: podemos fazer a devolução com reembolso ou troca pela Shopee, ou se preferir, evitar esse processo, posso te enviar outra peça dessa ou qualquer outra peça do nosso catálogo no mesmo valor que sua compra, sem cobrar nada pelas peças, você pagaria só o frete. Assim você não precisa esperar nem se incomodar com devolução dessas ai. O que acha? Estou aqui pra te ajudar</div>
+<button class='copyBtn' onclick='registrarClique("PEÇA QUEBRADA, CLIENTE MANDOU FOTO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("PEÇA QUEBRADA, CLIENTE MANDOU FOTO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>FANTANDO PARAFUSO</summary>
-<div class='resposta'><div class='resposta-texto'>Olá tudo bem? Peço desculpas em nome da Casa Rosa pelo nosso erro, eu posso estar te fazendo um pix com o valor dos parafusos para que você realize a compra de forma rapida em sua cidade, ou posso te enviar, caso prefira. O que e melhor para você?</div><button class='copyBtn' onclick='registrarClique("FANTANDO PARAFUSO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("FANTANDO PARAFUSO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Olá tudo bem? Peço desculpas em nome da Casa Rosa pelo nosso erro, eu posso estar te fazendo um pix com o valor dos parafusos para que você realize a compra de forma rapida em sua cidade, ou posso te enviar, caso prefira. O que e melhor para você?</div>
+<button class='copyBtn' onclick='registrarClique("FANTANDO PARAFUSO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("FANTANDO PARAFUSO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>FALTOU PARTES DO ARCO</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Peço desculpas por isso, posso estar te enviando a peça que faltou, ou se preferir posso fazer seu reembolso, o que você prefere?</div><button class='copyBtn' onclick='registrarClique("FALTOU PARTES DO ARCO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("FALTOU PARTES DO ARCO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Peço desculpas por isso, posso estar te enviando a peça que faltou, ou se preferir posso fazer seu reembolso, o que você prefere?</div>
+<button class='copyBtn' onclick='registrarClique("FALTOU PARTES DO ARCO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("FALTOU PARTES DO ARCO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>FALTOU UM ARCO INTEIRO</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Peço desculpas por isso, posso estar te enviando a peça que faltou, ou se preferir posso fazer seu reembolso, o que você prefere?</div><button class='copyBtn' onclick='registrarClique("FALTOU UM ARCO INTEIRO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("FALTOU UM ARCO INTEIRO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Peço desculpas por isso, posso estar te enviando a peça que faltou, ou se preferir posso fazer seu reembolso, o que você prefere?</div>
+<button class='copyBtn' onclick='registrarClique("FALTOU UM ARCO INTEIRO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("FALTOU UM ARCO INTEIRO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>FALTOU TRAVAS</summary>
-<div class='resposta'><div class='resposta-texto'>Olá tudo bem? Peço desculpas em nome da Casa Rosa pelo nosso erro, eu posso estar te enviando as peças que faltaram pode ser? Peço só que me passe um numero de contato para que eu passe a transportadora e já estarei te enviando.</div><button class='copyBtn' onclick='registrarClique("FALTOU TRAVAS")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("FALTOU TRAVAS"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Olá tudo bem? Peço desculpas em nome da Casa Rosa pelo nosso erro, eu posso estar te enviando as peças que faltaram pode ser? Peço só que me passe um numero de contato para que eu passe a transportadora e já estarei te enviando.</div>
+<button class='copyBtn' onclick='registrarClique("FALTOU TRAVAS")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("FALTOU TRAVAS"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="TROCAS_E_REEMBOLSO">
 <h2>TROCAS E REEMBOLSO</h2>
 <details>
 <summary>QUANTO SAI O FRETE DA PEÇA NOVA?</summary>
-<div class='resposta'><div class='resposta-texto'>Geralmente o frete sai baratinho, e você consegue usar cupom de frete gratis shopee, caso tenha. É você pode calcular o frete por esse anuncio de 2,00 reais, e pode fazer a compra dele para receber um trio totalmente novo
-</div><button class='copyBtn' onclick='registrarClique("QUANTO SAI O FRETE DA PEÇA NOVA?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUANTO SAI O FRETE DA PEÇA NOVA?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Geralmente o frete sai baratinho, e você consegue usar cupom de frete gratis shopee, caso tenha. É você pode calcular o frete por esse anuncio de 2,00 reais, e pode fazer a compra dele para receber um trio totalmente novo
+</div>
+<button class='copyBtn' onclick='registrarClique("QUANTO SAI O FRETE DA PEÇA NOVA?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUANTO SAI O FRETE DA PEÇA NOVA?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>REEMBOLSO PARCIAL PELA SHOPEE</summary>
-<div class='resposta'><div class='resposta-texto'>Para agilizar o processo, por favor, abra o pedido de reembolso e informe que você precisa do reembolso parcial, conforme descrito no próprio pedido. Assim que isso for feito, eu já libero o valor para você. Se tiver qualquer dúvida ou precisar de ajuda, estou aqui para você!</div><button class='copyBtn' onclick='registrarClique("REEMBOLSO PARCIAL PELA SHOPEE")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("REEMBOLSO PARCIAL PELA SHOPEE"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
-<div class='resposta'><div class='resposta-texto'>Oii tudo bem? Assim que o time da shopee liberar o reembolso, eu já autorizo aqui. Não precisa devolver nada. Qual quer coisa, se não liberarem ainda hoje, e só me chamar aqui, que faço por pix para você.</div><button class='copyBtn' onclick='registrarClique("REEMBOLSO PARCIAL PELA SHOPEE")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("REEMBOLSO PARCIAL PELA SHOPEE"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Para agilizar o processo, por favor, abra o pedido de reembolso e informe que você precisa do reembolso parcial, conforme descrito no próprio pedido. Assim que isso for feito, eu já libero o valor para você. Se tiver qualquer dúvida ou precisar de ajuda, estou aqui para você!</div>
+<button class='copyBtn' onclick='registrarClique("REEMBOLSO PARCIAL PELA SHOPEE")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("REEMBOLSO PARCIAL PELA SHOPEE"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii tudo bem? Assim que o time da shopee liberar o reembolso, eu já autorizo aqui. Não precisa devolver nada. Qual quer coisa, se não liberarem ainda hoje, e só me chamar aqui, que faço por pix para você.</div>
+<button class='copyBtn' onclick='registrarClique("REEMBOLSO PARCIAL PELA SHOPEE")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("REEMBOLSO PARCIAL PELA SHOPEE"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>COMO ABRIR REEMBOLSO PARCIAL?</summary>
-<div class='resposta'><div class='resposta-texto'>Como solicitar reembolso parcial na Shopee
-Abra o app da Shopee e vá em "Eu" > "Minhas Compras".
+<div class='resposta'><div>Como solicitar reembolso parcial na Shopee
+Abra o app da Shopee e vá em “Eu” > “Minhas Compras”.
 
-Encontre o pedido com problema e toque em "Solicitar Devolução/Reembolso".
+Encontre o pedido com problema e toque em “Solicitar Devolução/Reembolso”.
 
-Se aparecer a opção de "Reembolso Parcial", selecione-a e descreva o motivo, anexando fotos ou vídeos, se necessário.
+Se aparecer a opção de “Reembolso Parcial”, selecione-a e descreva o motivo, anexando fotos ou vídeos, se necessário.
 
-Caso a opção de reembolso parcial não apareça, você pode selecionar "Reembolso" (normal) e, na descrição, especificar que deseja apenas um valor parcial de volta. Explique o motivo com clareza e adicione provas (fotos, vídeos).</div><button class='copyBtn' onclick='registrarClique("COMO ABRIR REEMBOLSO PARCIAL?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("COMO ABRIR REEMBOLSO PARCIAL?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+Caso a opção de reembolso parcial não apareça, você pode selecionar “Reembolso” (normal) e, na descrição, especificar que deseja apenas um valor parcial de volta. Explique o motivo com clareza e adicione provas (fotos, vídeos).</div>
+<button class='copyBtn' onclick='registrarClique("COMO ABRIR REEMBOLSO PARCIAL?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("COMO ABRIR REEMBOLSO PARCIAL?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>PEDIDO DE REEMBOLSO FALTANDO PEÇA</summary>
-<div class='resposta'><div class='resposta-texto'>Peço só que abra o pedido de reembolso, dentro do proprio pedido, e eu já libero para você.Qualquer dúvida, estou à disposição!</div><button class='copyBtn' onclick='registrarClique("PEDIDO DE REEMBOLSO FALTANDO PEÇA")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("PEDIDO DE REEMBOLSO FALTANDO PEÇA"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
-<div class='resposta'><div class='resposta-texto'>Olá, tudo bem? Quero pedir desculpas pelo transtorno. Infelizmente, as outras peças parecem ter sido extraviado pela transportadora devido ao tamanho. Para resolver isso rapidamente, posso reembolsar o valor referente ao kit que faltou, permitindo que você compre outro e receba o produto o quanto antes.
+<div class='resposta'><div>Peço só que abra o pedido de reembolso, dentro do proprio pedido, e eu já libero para você.Qualquer dúvida, estou à disposição!</div>
+<button class='copyBtn' onclick='registrarClique("PEDIDO DE REEMBOLSO FALTANDO PEÇA")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("PEDIDO DE REEMBOLSO FALTANDO PEÇA"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Olá, tudo bem? Quero pedir desculpas pelo transtorno. Infelizmente, as outras peças parecem ter sido extraviado pela transportadora devido ao tamanho. Para resolver isso rapidamente, posso reembolsar o valor referente ao kit que faltou, permitindo que você compre outro e receba o produto o quanto antes.
 
 Para agilizar o processo, por favor, abra um pedido de reembolso e informe que se trata de um reembolso parcial, conforme descrito no próprio pedido. Assim que isso for feito, liberarei o valor para você.
 
-Se tiver qualquer dúvida ou precisar de mais alguma coisa, estou aqui para ajudar!</div><button class='copyBtn' onclick='registrarClique("PEDIDO DE REEMBOLSO FALTANDO PEÇA")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("PEDIDO DE REEMBOLSO FALTANDO PEÇA"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+Se tiver qualquer dúvida ou precisar de mais alguma coisa, estou aqui para ajudar!</div>
+<button class='copyBtn' onclick='registrarClique("PEDIDO DE REEMBOLSO FALTANDO PEÇA")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("PEDIDO DE REEMBOLSO FALTANDO PEÇA"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>COMO E FEITO A DEVOLUÇÃO E TROCA?</summary>
-<div class='resposta'><div class='resposta-texto'>As devoluções, trocas e reembolso são feitas pela shopee. E preciso devolver todo o kit. Para fazer isso, vá até "A caminho" em "Minhas compras" através da guia "Eu" > selecione o pedido > clique em "Pedido de Reembolso". Em seguida, selecione o motivo de devolução/reembolso > escolha a "Razão" > forneça evidência e descrição (se aplicável) > clique em "Enviar".</div><button class='copyBtn' onclick='registrarClique("COMO E FEITO A DEVOLUÇÃO E TROCA?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("COMO E FEITO A DEVOLUÇÃO E TROCA?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>As devoluções, trocas e reembolso são feitas pela shopee. E preciso devolver todo o kit. Para fazer isso, vá até “A caminho” em “Minhas compras” através da guia “Eu“ > selecione o pedido > clique em “Pedido de Reembolso“. Em seguida, selecione o motivo de devolução/reembolso > escolha a “Razão” > forneça evidência e descrição (se aplicável) > clique em ”Enviar”.</div>
+<button class='copyBtn' onclick='registrarClique("COMO E FEITO A DEVOLUÇÃO E TROCA?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("COMO E FEITO A DEVOLUÇÃO E TROCA?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>NÃO CONSIGO SOLICITAR DEVOLUÇÃO</summary>
-<div class='resposta'><div class='resposta-texto'>Toda devolução, troca e  reembolso e feito pela propria shopee, peço que entre em contato com o chat deles para que te ajudem de forma mais rapida . https://help.shopee.com.br/portal</div><button class='copyBtn' onclick='registrarClique("NÃO CONSIGO SOLICITAR DEVOLUÇÃO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("NÃO CONSIGO SOLICITAR DEVOLUÇÃO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Toda devolução, troca e  reembolso e feito pela propria shopee, peço que entre em contato com o chat deles para que te ajudem de forma mais rapida . https://help.shopee.com.br/portal</div>
+<button class='copyBtn' onclick='registrarClique("NÃO CONSIGO SOLICITAR DEVOLUÇÃO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("NÃO CONSIGO SOLICITAR DEVOLUÇÃO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="ENTREGAS">
 <h2>ENTREGAS</h2>
 <details>
 <summary>PEDIDO A CAMINHO MAS ATRASADO</summary>
-<div class='resposta'><div class='resposta-texto'>Sinto muito pelo problema com a entrega, entendo o quanto isso pode ser frustrante. Infelizmente, como a Shopee é responsável pelo processo de envio, não tenho controle direto sobre a situação, mas estou aqui para ajudar no que for possível!
+<div class='resposta'><div>Sinto muito pelo problema com a entrega, entendo o quanto isso pode ser frustrante. Infelizmente, como a Shopee é responsável pelo processo de envio, não tenho controle direto sobre a situação, mas estou aqui para ajudar no que for possível!
 
 Para agilizar a solução, já abri um chamado reforçando a urgência do seu caso. Além disso, você pode entrar em contato diretamente com o suporte da Shopee pelo aplicativo. Basta acessar o app, ir até a seção de 'Ajuda' e iniciar um chat com a equipe de suporte.
 
-Se precisar de algo mais, estarei à disposição!</div><button class='copyBtn' onclick='registrarClique("PEDIDO A CAMINHO MAS ATRASADO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("PEDIDO A CAMINHO MAS ATRASADO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+Se precisar de algo mais, estarei à disposição!</div>
+<button class='copyBtn' onclick='registrarClique("PEDIDO A CAMINHO MAS ATRASADO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("PEDIDO A CAMINHO MAS ATRASADO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUANTO TEMPO PARA ENVIAR?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? eles são enviados em até 48 horas após a compra e chegam em media de 4 a 8 dias ulteis.</div><button class='copyBtn' onclick='registrarClique("QUANTO TEMPO PARA ENVIAR?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUANTO TEMPO PARA ENVIAR?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? eles são enviados em até 48 horas após a compra e chegam em media de 4 a 8 dias ulteis.</div>
+<button class='copyBtn' onclick='registrarClique("QUANTO TEMPO PARA ENVIAR?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUANTO TEMPO PARA ENVIAR?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="CANCELADOS">
 <h2>CANCELADOS</h2>
 <details>
 <summary>MEU PEDIDO NÃO FOI ENVIADO E FOI CANCELADO</summary>
-<div class='resposta'><div class='resposta-texto'>Oi, tudo bem? Peço sinceras desculpas pelo transtorno com o encerramento do seu pedido. Entendo o impacto dessa situação e lamento que tenha passado por isso. A Shopee está enfrentando problemas na coleta, por conta da grande demanda da epoca, afetando a todos nós, especialmente você. Estamos em contato para resolver o mais rápido possível. Os reembolsos levam em média 48 horas, mas se demorar, sugiro contatar o suporte da Shopee. Como forma de compensação, ofereço um cupom de desconto, caso ainda tenha interesse na peça.</div><button class='copyBtn' onclick='registrarClique("MEU PEDIDO NÃO FOI ENVIADO E FOI CANCELADO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("MEU PEDIDO NÃO FOI ENVIADO E FOI CANCELADO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oi, tudo bem? Peço sinceras desculpas pelo transtorno com o encerramento do seu pedido. Entendo o impacto dessa situação e lamento que tenha passado por isso. A Shopee está enfrentando problemas na coleta, por conta da grande demanda da epoca, afetando a todos nós, especialmente você. Estamos em contato para resolver o mais rápido possível. Os reembolsos levam em média 48 horas, mas se demorar, sugiro contatar o suporte da Shopee. Como forma de compensação, ofereço um cupom de desconto, caso ainda tenha interesse na peça.</div>
+<button class='copyBtn' onclick='registrarClique("MEU PEDIDO NÃO FOI ENVIADO E FOI CANCELADO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("MEU PEDIDO NÃO FOI ENVIADO E FOI CANCELADO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>FALHA NA ENTREGA DO PEDIDO</summary>
-<div class='resposta'><div class='resposta-texto'>Olá! Sinto muito pelo problema na entrega, sei como isso pode ser frustrante. A Shopee Express é responsável por todo o processo, e infelizmente não temos controle sobre o ocorrido. Esses erros também nos prejudicam. Mas não se preocupe! Você pode entrar em contato com o suporte da Shopee pelo app, na seção 'Ajuda'. Enquanto isso, para compensar o transtorno, posso te oferecer um cupom de desconto caso ainda tenha interesse na peça. O que acha? Fico à disposição!</div><button class='copyBtn' onclick='registrarClique("FALHA NA ENTREGA DO PEDIDO")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("FALHA NA ENTREGA DO PEDIDO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Olá! Sinto muito pelo problema na entrega, sei como isso pode ser frustrante. A Shopee Express é responsável por todo o processo, e infelizmente não temos controle sobre o ocorrido. Esses erros também nos prejudicam. Mas não se preocupe! Você pode entrar em contato com o suporte da Shopee pelo app, na seção 'Ajuda'. Enquanto isso, para compensar o transtorno, posso te oferecer um cupom de desconto caso ainda tenha interesse na peça. O que acha? Fico à disposição!</div>
+<button class='copyBtn' onclick='registrarClique("FALHA NA ENTREGA DO PEDIDO")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("FALHA NA ENTREGA DO PEDIDO"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>CANCELADO POR FALTA DE ENVIO 2 TRIOS DE CILINDROS</summary>
-<div class='resposta'><div class='resposta-texto'>Olá! Sinto muito pelo problema com a entrega.  Infelizmente o pacote foi recusado pela transportadora da shopee por conta do tamanho, esse kit só e possivel ser enviado 1 por pedido.</div><button class='copyBtn' onclick='registrarClique("CANCELADO POR FALTA DE ENVIO 2 TRIOS DE CILINDROS")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("CANCELADO POR FALTA DE ENVIO 2 TRIOS DE CILINDROS"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Olá! Sinto muito pelo problema com a entrega.  Infelizmente o pacote foi recusado pela transportadora da shopee por conta do tamanho, esse kit só e possivel ser enviado 1 por pedido.</div>
+<button class='copyBtn' onclick='registrarClique("CANCELADO POR FALTA DE ENVIO 2 TRIOS DE CILINDROS")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("CANCELADO POR FALTA DE ENVIO 2 TRIOS DE CILINDROS"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="DUVIDAS_GERAIS">
 <h2>DUVIDAS GERAIS</h2>
 <details>
 <summary>VOCÊ TEM ESSE MODELO DE PEÇA?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Infelizmente não tenho mais esse modelo</div><button class='copyBtn' onclick='registrarClique("VOCÊ TEM ESSE MODELO DE PEÇA?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("VOCÊ TEM ESSE MODELO DE PEÇA?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Infelizmente não tenho mais esse modelo</div>
+<button class='copyBtn' onclick='registrarClique("VOCÊ TEM ESSE MODELO DE PEÇA?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("VOCÊ TEM ESSE MODELO DE PEÇA?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>FAZ PERSONALIZADO?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Infelizmente não faço</div><button class='copyBtn' onclick='registrarClique("FAZ PERSONALIZADO?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("FAZ PERSONALIZADO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Infelizmente não faço</div>
+<button class='copyBtn' onclick='registrarClique("FAZ PERSONALIZADO?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("FAZ PERSONALIZADO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>VEM QUEBRADO? MUITOS COMENTARIOS RUINS</summary>
-<div class='resposta'><div class='resposta-texto'>Bom dia, tudo bem?
-Estamos sempre em busca de melhorar cada etapa do nosso processo para oferecer a melhor experiência possível aos nossos clientes. Sabemos que, mesmo com um índice de reclamações abaixo de 1%, o volume das nossas vendas - mais de 10 mil unidades por mês - pode fazer com que esse número pareça maior do que realmente é.
+<div class='resposta'><div>Bom dia, tudo bem?
+Estamos sempre em busca de melhorar cada etapa do nosso processo para oferecer a melhor experiência possível aos nossos clientes. Sabemos que, mesmo com um índice de reclamações abaixo de 1%, o volume das nossas vendas — mais de 10 mil unidades por mês — pode fazer com que esse número pareça maior do que realmente é.
 
-Ainda assim, cada feedback é uma oportunidade de evolução, e levamos cada um deles muito a sério. Seguimos trabalhando com foco na melhoria contínua, para que cada cliente se sinta bem atendido e satisfeito com a nossa loja.</div><button class='copyBtn' onclick='registrarClique("VEM QUEBRADO? MUITOS COMENTARIOS RUINS")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("VEM QUEBRADO? MUITOS COMENTARIOS RUINS"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+Ainda assim, cada feedback é uma oportunidade de evolução, e levamos cada um deles muito a sério. Seguimos trabalhando com foco na melhoria contínua, para que cada cliente se sinta bem atendido e satisfeito com a nossa loja.</div>
+<button class='copyBtn' onclick='registrarClique("VEM QUEBRADO? MUITOS COMENTARIOS RUINS")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("VEM QUEBRADO? MUITOS COMENTARIOS RUINS"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="CAPAS">
 <h2>CAPAS</h2>
 <details>
 <summary>VENDE CAPAS?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Infelizmente não trabalhamos com as capas</div><button class='copyBtn' onclick='registrarClique("VENDE CAPAS?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("VENDE CAPAS?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Infelizmente não trabalhamos com as capas</div>
+<button class='copyBtn' onclick='registrarClique("VENDE CAPAS?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("VENDE CAPAS?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUAL O TAMANHO DA CAPA DO ARCO REDONDO G?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Para esse arco e usado capas, de 150 cm x 150 cm</div><button class='copyBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO REDONDO G?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO REDONDO G?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Para esse arco e usado capas, de 150 cm x 150 cm</div>
+<button class='copyBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO REDONDO G?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO REDONDO G?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUAL O TAMANHO DA CAPA DO ARCO romano?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Para esse arco e usado capas, de 100 cm x 180 cm</div><button class='copyBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO romano?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO romano?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Para esse arco e usado capas, de 100 cm x 180 cm</div>
+<button class='copyBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO romano?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO romano?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUAL O TAMANHO DA CAPA DO ARCO REDONDO P?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Para esse arco e usado capas, de 80 cm x 80 cm</div><button class='copyBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO REDONDO P?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO REDONDO P?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Para esse arco e usado capas, de 80 cm x 80 cm</div>
+<button class='copyBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO REDONDO P?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL O TAMANHO DA CAPA DO ARCO REDONDO P?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUAL O TAMANHO DAS CAPAS DO TRIO DE CILINDRO?</summary>
-<div class='resposta'><div class='resposta-texto'>CILINDRO PEQUENO Altura: 45 cm Diâmetro: 38 cm Circunferência: 120 cm 
+<div class='resposta'><div>CILINDRO PEQUENO Altura: 45 cm Diâmetro: 38 cm Circunferência: 120 cm 
 CILINDRO MÉDIO Altura: 58 cm Diâmetro: 44 cm Circunferência: 138 cm 
-CILINDRO GRANDE Altura: 80 cm Diâmetro: 50 cm Circunferência: 157 cm</div><button class='copyBtn' onclick='registrarClique("QUAL O TAMANHO DAS CAPAS DO TRIO DE CILINDRO?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL O TAMANHO DAS CAPAS DO TRIO DE CILINDRO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+CILINDRO GRANDE Altura: 80 cm Diâmetro: 50 cm Circunferência: 157 cm</div>
+<button class='copyBtn' onclick='registrarClique("QUAL O TAMANHO DAS CAPAS DO TRIO DE CILINDRO?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL O TAMANHO DAS CAPAS DO TRIO DE CILINDRO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>COMO COLOCA CAPA NO PAINEL REDONDO?</summary>
-<div class='resposta'><div class='resposta-texto'>Boa tarde tudo bem? o tecido tem que ser colocado antes de parafusar os pés, algumas capas vem já com as entradas dos parafusos, caso não venha e preciso fazer um furo na dobra de traz</div><button class='copyBtn' onclick='registrarClique("COMO COLOCA CAPA NO PAINEL REDONDO?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("COMO COLOCA CAPA NO PAINEL REDONDO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Boa tarde tudo bem? o tecido tem que ser colocado antes de parafusar os pés, algumas capas vem já com as entradas dos parafusos, caso não venha e preciso fazer um furo na dobra de traz</div>
+<button class='copyBtn' onclick='registrarClique("COMO COLOCA CAPA NO PAINEL REDONDO?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("COMO COLOCA CAPA NO PAINEL REDONDO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="MEDIDAS">
 <h2>MEDIDAS</h2>
 <details>
 <summary>QUAL A MEDIDA DO ARCO REDONDO G?</summary>
-<div class='resposta'><div class='resposta-texto'>O arco redondo G tem 1.50m x 1.50m no arco e com o suporte ele fica com 2.00m de altura</div><button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO REDONDO G?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO REDONDO G?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>O arco redondo G tem 1.50m x 1.50m no arco e com o suporte ele fica com 2.00m de altura</div>
+<button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO REDONDO G?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO REDONDO G?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUAL A MEDIDA DO ARCO REDONDO P?</summary>
-<div class='resposta'><div class='resposta-texto'>O arco redondo P tem 80cm x 80cm no arco e com o suporte ele fica com 1.50m de altura</div><button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO REDONDO P?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO REDONDO P?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>O arco redondo P tem 80cm x 80cm no arco e com o suporte ele fica com 1.50m de altura</div>
+<button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO REDONDO P?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO REDONDO P?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUAL A MEDIDA DO ARCO ROMANO?</summary>
-<div class='resposta'><div class='resposta-texto'>O arco romano tem 1.75m x 91cm, e também pode ser montado com 1,10x91</div><button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO ROMANO?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO ROMANO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>O arco romano tem 1.75m x 91cm, e também pode ser montado com 1,10x91</div>
+<button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO ROMANO?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DO ARCO ROMANO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUAL A MEDIDA DO MINI PAINEL?</summary>
-<div class='resposta'><div class='resposta-texto'>O nosso painel mini de mesa tem 28cm x 28cm</div><button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DO MINI PAINEL?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DO MINI PAINEL?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>O nosso painel mini de mesa tem 28cm x 28cm</div>
+<button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DO MINI PAINEL?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DO MINI PAINEL?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>QUAL A MEDIDA DOS CILINDROS?</summary>
-<div class='resposta'><div class='resposta-texto'>Trio de Cilindros; G 80CM X 50CM / M 58cm x 43cm / P 45cm x 36cm</div><button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DOS CILINDROS?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DOS CILINDROS?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Trio de Cilindros; G 80CM X 50CM / M 58cm x 43cm / P 45cm x 36cm</div>
+<button class='copyBtn' onclick='registrarClique("QUAL A MEDIDA DOS CILINDROS?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("QUAL A MEDIDA DOS CILINDROS?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="COMPOSIÇÃO_KITS">
 <h2>COMPOSIÇÃO KITS</h2>
 <details>
 <summary>O QUE VEM NESSE KIT DE 2 ARCOS E O CILINDRO?</summary>
-<div class='resposta'><div class='resposta-texto'>Bom dia,  nesse kit e o trio de cilindros, + 1 painel redondo 1.50x1.50 x 2m e 1 painel romano 1.80 x 91 + Painel de mesa 28 x 28</div><button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 2 ARCOS E O CILINDRO?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 2 ARCOS E O CILINDRO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Bom dia,  nesse kit e o trio de cilindros, + 1 painel redondo 1.50x1.50 x 2m e 1 painel romano 1.80 x 91 + Painel de mesa 28 x 28</div>
+<button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 2 ARCOS E O CILINDRO?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 2 ARCOS E O CILINDRO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>O QUE VEM NESSE KIT DE 1 ARCO E O CILINDRO?</summary>
-<div class='resposta'><div class='resposta-texto'>Bom dia, isso mesmo nesse kit e o trio de cilindros, + 1 painel redondo 1.50x1.50 x 2m+ Painel de mesa 28 x 28</div><button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 1 ARCO E O CILINDRO?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 1 ARCO E O CILINDRO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Bom dia, isso mesmo nesse kit e o trio de cilindros, + 1 painel redondo 1.50x1.50 x 2m+ Painel de mesa 28 x 28</div>
+<button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 1 ARCO E O CILINDRO?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 1 ARCO E O CILINDRO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>O QUE VEM NESSE KIT DE 99,00?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, tudo bem? Dentro desse anuncio você tem a opção de escolher alguns kits com diferentes peças, cada kit tem um valor. O anuncio vai de 69,90 que representa o arco redondo sozinho, 99 que seria o trio de cilindros sem arco, até 209,00 que vai o trio e 2 arcos.</div><button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 99,00?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 99,00?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, tudo bem? Dentro desse anuncio você tem a opção de escolher alguns kits com diferentes peças, cada kit tem um valor. O anuncio vai de 69,90 que representa o arco redondo sozinho, 99 que seria o trio de cilindros sem arco, até 209,00 que vai o trio e 2 arcos.</div>
+<button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 99,00?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 99,00?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>O QUE VEM NESSE KIT DE 2 ARCOS, CILINDROS + KIT MESA?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii,  esse kit e o trio de cilindros, + 1 painel redondo 1.50 e 1 painel romano 1.80 x 91 + KIT porta docinho</div><button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 2 ARCOS, CILINDROS + KIT ME")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 2 ARCOS, CILINDROS + KIT ME"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii,  esse kit e o trio de cilindros, + 1 painel redondo 1.50 e 1 painel romano 1.80 x 91 + KIT porta docinho</div>
+<button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 2 ARCOS, CILINDROS + KIT ME")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 2 ARCOS, CILINDROS + KIT ME"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>O QUE VEM NESSE KIT DE 1 ARCO, CILINDROS + KIT MESA?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii,  esse kit e o trio de cilindros, + 1 painel redondo 1.50  + KIT porta docinho+ Painel de mesa 28 x 28</div><button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 1 ARCO, CILINDROS + KIT MES")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 1 ARCO, CILINDROS + KIT MES"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii,  esse kit e o trio de cilindros, + 1 painel redondo 1.50  + KIT porta docinho+ Painel de mesa 28 x 28</div>
+<button class='copyBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 1 ARCO, CILINDROS + KIT MES")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("O QUE VEM NESSE KIT DE 1 ARCO, CILINDROS + KIT MES"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>O QUE E ESSE MINI PAINEL QUE VEM JUNTO?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii tudo bem?  esse e um painel de mesa, que enviamos de brinde, geralmente ele e usado em cima da mesa para colocar personagens, decorações ou nomes e escritas</div><button class='copyBtn' onclick='registrarClique("O QUE E ESSE MINI PAINEL QUE VEM JUNTO?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("O QUE E ESSE MINI PAINEL QUE VEM JUNTO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii tudo bem?  esse e um painel de mesa, que enviamos de brinde, geralmente ele e usado em cima da mesa para colocar personagens, decorações ou nomes e escritas</div>
+<button class='copyBtn' onclick='registrarClique("O QUE E ESSE MINI PAINEL QUE VEM JUNTO?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("O QUE E ESSE MINI PAINEL QUE VEM JUNTO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="PIX_E_KANGU">
 <h2>PIX E KANGU</h2>
 <details>
 <summary>ENVIO DE PEÇAS QUE FALTARAM</summary>
-<div class='resposta'><div class='resposta-texto'>Peço só que me passe um numero de contato para que eu passe a transportadora e já estarei te enviando. Para isso peço que coloque algumas virgulas ou pontos entres os numeros, para a shopee não bloquear a mensagem.</div><button class='copyBtn' onclick='registrarClique("ENVIO DE PEÇAS QUE FALTARAM")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("ENVIO DE PEÇAS QUE FALTARAM"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
-<div class='resposta'><div class='resposta-texto'>Agradeço, já estou passando para minha equipe de envios, assim que for despachado eu te envio o rastreio.</div><button class='copyBtn' onclick='registrarClique("ENVIO DE PEÇAS QUE FALTARAM")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("ENVIO DE PEÇAS QUE FALTARAM"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Peço só que me passe um numero de contato para que eu passe a transportadora e já estarei te enviando. Para isso peço que coloque algumas virgulas ou pontos entres os numeros, para a shopee não bloquear a mensagem.</div>
+<button class='copyBtn' onclick='registrarClique("ENVIO DE PEÇAS QUE FALTARAM")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("ENVIO DE PEÇAS QUE FALTARAM"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Agradeço, já estou passando para minha equipe de envios, assim que for despachado eu te envio o rastreio.</div>
+<button class='copyBtn' onclick='registrarClique("ENVIO DE PEÇAS QUE FALTARAM")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("ENVIO DE PEÇAS QUE FALTARAM"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>REEMBOLSO POR PIX</summary>
-<div class='resposta'><div class='resposta-texto'>Peço que me passe uma chave pix que eu já passo para minha equipe fazer. Para isso peço que coloque algumas virgulas ou pontos entres os numeros, para a shopee não bloquear a mensagem.</div><button class='copyBtn' onclick='registrarClique("REEMBOLSO POR PIX")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("REEMBOLSO POR PIX"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
-<div class='resposta'><div class='resposta-texto'>Agradeço, já estou passando para minha equipe, e assim que for feito eu te envio o comprovante.</div><button class='copyBtn' onclick='registrarClique("REEMBOLSO POR PIX")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("REEMBOLSO POR PIX"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Peço que me passe uma chave pix que eu já passo para minha equipe fazer. Para isso peço que coloque algumas virgulas ou pontos entres os numeros, para a shopee não bloquear a mensagem.</div>
+<button class='copyBtn' onclick='registrarClique("REEMBOLSO POR PIX")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("REEMBOLSO POR PIX"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Agradeço, já estou passando para minha equipe, e assim que for feito eu te envio o comprovante.</div>
+<button class='copyBtn' onclick='registrarClique("REEMBOLSO POR PIX")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("REEMBOLSO POR PIX"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
-<section id="MANUAL">
 <h2>MANUAL</h2>
 <details>
 <summary>COMO MONTA O PAINEL REDONDO G?</summary>
-<div class='resposta'><div class='resposta-texto'>Oii, o arco redondo e montado com 6 partes curvadas, 4 travas e 2 pés, e 12 parafusos, esse e o manual https://youtu.be/BHirxN8hsL4</div><button class='copyBtn' onclick='registrarClique("COMO MONTA O PAINEL REDONDO G?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("COMO MONTA O PAINEL REDONDO G?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Oii, o arco redondo e montado com 6 partes curvadas, 4 travas e 2 pés, e 12 parafusos, esse e o manual https://youtu.be/BHirxN8hsL4</div>
+<button class='copyBtn' onclick='registrarClique("COMO MONTA O PAINEL REDONDO G?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("COMO MONTA O PAINEL REDONDO G?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>COMO MONTA O PAINEL REDONDO P?</summary>
-<div class='resposta'><div class='resposta-texto'>Esse e o manual do arco redondo liso; https://www.youtube.com/watch?v=AZ4iCtpEhc0&t=33s                  </div><button class='copyBtn' onclick='registrarClique("COMO MONTA O PAINEL REDONDO P?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("COMO MONTA O PAINEL REDONDO P?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>Esse e o manual do arco redondo liso; https://www.youtube.com/watch?v=AZ4iCtpEhc0&t=33s                  </div>
+<button class='copyBtn' onclick='registrarClique("COMO MONTA O PAINEL REDONDO P?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("COMO MONTA O PAINEL REDONDO P?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
 <details>
 <summary>COMO MONTA O PAINEL ROMANO?</summary>
-<div class='resposta'><div class='resposta-texto'>o arco romano, é montado com 4 partes retas ( sendo 2 com rasgo na ponta), 2 partes curvadas, e dois pés arredondados, são usados 5 travas, e 10 parafusos, o manual e esse; https://www.youtube.com/watch?v=D-lNjLbDEmg                               </div><button class='copyBtn' onclick='registrarClique("COMO MONTA O PAINEL ROMANO?")'>📋 Copiar</button><button class='whatsBtn' onclick='registrarClique("COMO MONTA O PAINEL ROMANO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
+<div class='resposta'><div>o arco romano, é montado com 4 partes retas ( sendo 2 com rasgo na ponta), 2 partes curvadas, e dois pés arredondados, são usados 5 travas, e 10 parafusos, o manual e esse; https://www.youtube.com/watch?v=D-lNjLbDEmg                               </div>
+<button class='copyBtn' onclick='registrarClique("COMO MONTA O PAINEL ROMANO?")'>📋 Copiar</button>
+<button class='whatsBtn' onclick='registrarClique("COMO MONTA O PAINEL ROMANO?"); shareWhatsApp(this)'>📲 WhatsApp</button></div>
 </details>
-</section>
 
 <div id="statsModal">
-    <span class="closeModal" onclick="document.getElementById('statsModal').style.display='none'">✖</span>
-    <h3>📊 Estatísticas de Cliques</h3>
-    <ul id="statsList"></ul>
+  <span class="closeModal" onclick="document.getElementById('statsModal').style.display='none'">✖</span>
+  <h3>📊 Estatísticas de Cliques</h3>
+  <ul id="statsList"></ul>
 </div>
 <script>
-    const senhaCorreta = "4618827";
+  const senhaCorreta = "4618827";
+  const perguntasIA = ["QUAL QUER PE\u00c7A QUEBRADO, CLIENTE N\u00c3O MANDOU FOTO", "TRIO DE CILINDRO QUEBRADO, CLIENTE MANDOU FOTO", "PE\u00c7A QUEBRADA, CLIENTE MANDOU FOTO", "FANTANDO PARAFUSO", "FALTOU PARTES DO ARCO", "FALTOU UM ARCO INTEIRO", "FALTOU TRAVAS", "QUANTO SAI O FRETE DA PE\u00c7A NOVA?", "REEMBOLSO PARCIAL PELA SHOPEE", "COMO ABRIR REEMBOLSO PARCIAL?", "PEDIDO DE REEMBOLSO FALTANDO PE\u00c7A", "COMO E FEITO A DEVOLU\u00c7\u00c3O E TROCA?", "N\u00c3O CONSIGO SOLICITAR DEVOLU\u00c7\u00c3O", "PEDIDO A CAMINHO MAS ATRASADO", "QUANTO TEMPO PARA ENVIAR?", "MEU PEDIDO N\u00c3O FOI ENVIADO E FOI CANCELADO", "FALHA NA ENTREGA DO PEDIDO", "CANCELADO POR FALTA DE ENVIO 2 TRIOS DE CILINDROS", "VOC\u00ca TEM ESSE MODELO DE PE\u00c7A?", "FAZ PERSONALIZADO?", "VEM QUEBRADO? MUITOS COMENTARIOS RUINS", "VENDE CAPAS?", "QUAL O TAMANHO DA CAPA DO ARCO REDONDO G?", "QUAL O TAMANHO DA CAPA DO ARCO romano?", "QUAL O TAMANHO DA CAPA DO ARCO REDONDO P?", "QUAL O TAMANHO DAS CAPAS DO TRIO DE CILINDRO?", "COMO COLOCA CAPA NO PAINEL REDONDO?", "QUAL A MEDIDA DO ARCO REDONDO G?", "QUAL A MEDIDA DO ARCO REDONDO P?", "QUAL A MEDIDA DO ARCO ROMANO?", "QUAL A MEDIDA DO MINI PAINEL?", "QUAL A MEDIDA DOS CILINDROS?", "O QUE VEM NESSE KIT DE 2 ARCOS E O CILINDRO?", "O QUE VEM NESSE KIT DE 1 ARCO E O CILINDRO?", "O QUE VEM NESSE KIT DE 99,00?", "O QUE VEM NESSE KIT DE 2 ARCOS, CILINDROS + KIT MESA?", "O QUE VEM NESSE KIT DE 1 ARCO, CILINDROS + KIT MESA?", "O QUE E ESSE MINI PAINEL QUE VEM JUNTO?", "ENVIO DE PE\u00c7AS QUE FALTARAM", "REEMBOLSO POR PIX", "COMO MONTA O PAINEL REDONDO G?", "COMO MONTA O PAINEL REDONDO P?", "COMO MONTA O PAINEL ROMANO?"];
 
-    function registrarClique(perguntaId) {
-        let dados = JSON.parse(localStorage.getItem("faqClicks") || "{}");
-        dados[perguntaId] = (dados[perguntaId] || 0) + 1;
-        localStorage.setItem("faqClicks", JSON.stringify(dados));
-    }
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("modoEscuro", document.body.classList.contains("dark"));
+  }
 
-    function abrirEstatisticas() {
-        const senha = prompt("Digite a senha:");
-        if (senha === senhaCorreta) {
-            const dados = JSON.parse(localStorage.getItem("faqClicks") || "{}");
-            const lista = Object.entries(dados).sort((a,b) => b[1]-a[1]).slice(0,10);
-            const container = document.getElementById("statsList");
-            container.innerHTML = lista.map(item => "<li><strong>" + item[0] + "</strong>: " + item[1] + " cliques</li>").join("");
-            document.getElementById("statsModal").style.display = "block";
-        } else {
-            alert("Senha incorreta.");
-        }
-    }
+  if (localStorage.getItem("modoEscuro") === "true") {
+    document.body.classList.add("dark");
+  }
 
-    function shareWhatsApp(btn) {
-        const text = btn.previousElementSibling.innerText.trim();
-        const url = "https://wa.me/?text=" + encodeURIComponent(text);
-        window.open(url, '_blank');
+  function registrarClique(perguntaId) {
+    let dados = JSON.parse(localStorage.getItem("faqClicks") || "{}");
+    dados[perguntaId] = (dados[perguntaId] || 0) + 1;
+    localStorage.setItem("faqClicks", JSON.stringify(dados));
+  }
+
+  function abrirEstatisticas() {
+    const senha = prompt("Digite a senha:");
+    if (senha === senhaCorreta) {
+      const dados = JSON.parse(localStorage.getItem("faqClicks") || "{}");
+      const lista = Object.entries(dados).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      const container = document.getElementById("statsList");
+      container.innerHTML = lista.map(item => `<li><strong>${item[0]}</strong>: ${item[1]} cliques</li>`).join("");
+      document.getElementById("statsModal").style.display = "block";
+    } else {
+      alert("Senha incorreta.");
     }
+  }
+
+  function exportarCSV() {
+    const dados = JSON.parse(localStorage.getItem("faqClicks") || "{}");
+    let csv = "Pergunta,Cliques\n";
+    for (const [pergunta, cliques] of Object.entries(dados)) {
+      csv += `"${pergunta}",${cliques}\n`;
+    }
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "faq-cliques.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  function sugerirResposta() {
+    const entrada = document.getElementById("inputIA").value.toLowerCase();
+    if (!entrada) return document.getElementById("sugestaoIA").innerHTML = "";
+    let sugestao = "";
+    let maxSim = 0;
+    perguntasIA.forEach(p => {
+      let sim = 0;
+      entrada.split(" ").forEach(pal => {
+        if (p.toLowerCase().includes(pal)) sim++;
+      });
+      if (sim > maxSim) {
+        maxSim = sim;
+        sugestao = p;
+      }
+    });
+    document.getElementById("sugestaoIA").innerHTML = sugestao ? "🔎 Pergunta mais próxima: <em>" + sugestao + "</em>" : "";
+  }
+
+  function shareWhatsApp(btn) {
+    const text = btn.previousElementSibling.innerText.trim();
+    const url = "https://wa.me/?text=" + encodeURIComponent(text);
+    window.open(url, '_blank');
+  }
 </script>
 </main>
 </body>
 </html>
-
